@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-brand-200 text-brand-900;
+  }
+}
+
+@layer components {
+  /* ── Buttons ──────────────────────────── */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2.5 rounded-xl font-semibold text-sm
+           transition-all duration-200 ease-out
+           focus:outline-none focus:ring-2 focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed
+           active:scale-[0.97];
+  }
+
+  .btn-primary {
+    @apply btn bg-brand-600 text-white
+           hover:bg-brand-700 hover:shadow-glow
+           focus:ring-brand-500;
+  }
+
+  .btn-secondary {
+    @apply btn bg-white text-gray-700 border border-gray-200
+           hover:bg-gray-50 hover:border-gray-300 hover:shadow-soft
+           focus:ring-brand-500;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-600 text-white
+           hover:bg-red-700 hover:shadow-lg
+           focus:ring-red-500;
+  }
+
+  /* ── Inputs ──────────────────────────── */
+  .input {
+    @apply block w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm
+           placeholder-gray-400 bg-white
+           transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-400
+           hover:border-gray-300;
+  }
+
+  .label {
+    @apply block text-sm font-semibold text-gray-700 mb-1.5;
+  }
+
+  /* ── Cards ──────────────────────────── */
+  .card {
+    @apply bg-white rounded-2xl shadow-card border border-gray-100 p-6
+           transition-all duration-200;
+  }
+
+  /* ── Error Text ──────────────────────── */
+  .error-text {
+    @apply text-sm text-red-600 mt-1.5 font-medium;
+  }
+
+  /* ── Auth Page Decorative Shapes ─────── */
+  .auth-bg {
+    @apply min-h-screen flex items-center justify-center relative overflow-hidden;
+    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 25%, #c7d2fe 50%, #e0e7ff 75%, #f5f3ff 100%);
+  }
+
+  .auth-bg::before {
+    content: '';
+    @apply absolute w-[600px] h-[600px] rounded-full opacity-20 animate-float;
+    background: radial-gradient(circle, #818cf8, transparent 70%);
+    top: -120px;
+    right: -120px;
+  }
+
+  .auth-bg::after {
+    content: '';
+    @apply absolute w-[400px] h-[400px] rounded-full opacity-15 animate-float-delayed;
+    background: radial-gradient(circle, #6366f1, transparent 70%);
+    bottom: -80px;
+    left: -80px;
+  }
+
+  .auth-card {
+    @apply bg-white/80 backdrop-blur-xl rounded-3xl shadow-modal border border-white/50 p-8;
+  }
+}
+
+/* ── Scrollbar styling ──────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
