@@ -36,7 +36,7 @@ export function Navbar() {
                 <div className="h-6 w-6 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center">
                   <span className="text-xs font-bold text-white uppercase">{user.email[0]}</span>
                 </div>
-                <span className="text-sm text-gray-600 font-medium">{user.email}</span>
+                <span className="text-sm text-gray-600 font-medium max-w-[180px] truncate">{user.email}</span>
               </div>
               <button
                 onClick={handleLogout}

@@ -8,6 +8,29 @@ import { ProjectForm } from '../components/ProjectForm';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { Spinner } from '../components/Spinner';
 
+function AnimatedNumber({ value }: { value: number }) {
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    if (value === 0) { setDisplay(0); return; }
+    let start = 0;
+    const duration = 500;
+    const step = Math.ceil(value / (duration / 16));
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= value) {
+        setDisplay(value);
+        clearInterval(timer);
+      } else {
+        setDisplay(start);
+      }
+    }, 16);
+    return () => clearInterval(timer);
+  }, [value]);
+
+  return <>{display}</>;
+}
+
 export function ProjectPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -105,11 +128,71 @@ export function ProjectPage() {
 
   const progressPct = taskStats.total > 0 ? Math.round((taskStats.done / taskStats.total) * 100) : 0;
 
+  const STAT_CARDS = [
+    {
+      label: 'Total',
+      value: taskStats.total,
+      iconBg: 'bg-brand-50',
+      iconColor: 'text-brand-500',
+      valueBg: 'text-gray-900',
+      borderColor: 'border-brand-100',
+      icon: (
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Todo',
+      value: taskStats.todo,
+      iconBg: 'bg-gray-100',
+      iconColor: 'text-gray-500',
+      valueBg: 'text-gray-600',
+      borderColor: 'border-gray-100',
+      icon: (
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+      ),
+    },
+    {
+      label: 'In Progress',
+      value: taskStats.inProgress,
+      iconBg: 'bg-blue-50',
+      iconColor: 'text-blue-500',
+      valueBg: 'text-blue-600',
+      borderColor: 'border-blue-100',
+      icon: (
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Done',
+      value: taskStats.done,
+      iconBg: 'bg-green-50',
+      iconColor: 'text-green-500',
+      valueBg: 'text-green-600',
+      borderColor: 'border-green-100',
+      icon: (
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        </svg>
+      ),
+    },
+  ];
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 animate-fade-in">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
-        <Link to="/" className="hover:text-brand-600 transition-colors font-medium">Projects</Link>
+        <Link to="/" className="hover:text-brand-600 transition-colors font-medium flex items-center gap-1.5">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          Projects
+        </Link>
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
@@ -148,68 +231,55 @@ export function ProjectPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-card p-5">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="h-8 w-8 rounded-xl bg-gray-100 flex items-center justify-center">
-              <svg className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-              </svg>
+        {STAT_CARDS.map(stat => (
+          <div key={stat.label} className={`bg-white rounded-2xl border ${stat.borderColor} shadow-card p-5 hover:shadow-card-hover transition-all duration-300`}>
+            <div className="flex items-center gap-2 mb-3">
+              <div className={`h-8 w-8 rounded-xl ${stat.iconBg} flex items-center justify-center ${stat.iconColor}`}>
+                {stat.icon}
+              </div>
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">{stat.label}</p>
             </div>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total</p>
+            <p className={`text-3xl font-extrabold ${stat.valueBg}`}>
+              <AnimatedNumber value={stat.value} />
+            </p>
           </div>
-          <p className="text-3xl font-extrabold text-gray-900">{taskStats.total}</p>
-        </div>
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-card p-5">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="h-8 w-8 rounded-xl bg-gray-100 flex items-center justify-center">
-              <svg className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>
-            </div>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Todo</p>
-          </div>
-          <p className="text-3xl font-extrabold text-gray-600">{taskStats.todo}</p>
-        </div>
-        <div className="bg-white rounded-2xl border border-blue-100 shadow-card p-5">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="h-8 w-8 rounded-xl bg-blue-50 flex items-center justify-center">
-              <svg className="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <p className="text-xs font-semibold text-blue-500 uppercase tracking-wider">In Progress</p>
-          </div>
-          <p className="text-3xl font-extrabold text-blue-600">{taskStats.inProgress}</p>
-        </div>
-        <div className="bg-white rounded-2xl border border-green-100 shadow-card p-5">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="h-8 w-8 rounded-xl bg-green-50 flex items-center justify-center">
-              <svg className="h-4 w-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <p className="text-xs font-semibold text-green-500 uppercase tracking-wider">Done</p>
-          </div>
-          <p className="text-3xl font-extrabold text-green-600">{taskStats.done}</p>
-        </div>
+        ))}
       </div>
 
       {/* Progress bar */}
       {taskStats.total > 0 && (
         <div className="mb-10 bg-white rounded-2xl border border-gray-100 shadow-card p-5">
           <div className="flex items-center justify-between text-sm mb-3">
-            <span className="text-gray-600 font-semibold">Overall Progress</span>
-            <span className="text-brand-600 font-bold text-base">{progressPct}%</span>
+            <span className="text-gray-600 font-semibold flex items-center gap-2">
+              <svg className="h-4 w-4 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              Overall Progress
+            </span>
+            <span className={`font-bold text-base ${progressPct === 100 ? 'text-green-600' : 'text-brand-600'}`}>{progressPct}%</span>
           </div>
           <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-brand-500 to-brand-600 rounded-full transition-all duration-700 ease-out"
+              className={`h-full rounded-full transition-all duration-700 ease-out ${
+                progressPct === 100
+                  ? 'bg-gradient-to-r from-green-400 to-green-500'
+                  : 'bg-gradient-to-r from-brand-400 to-brand-600'
+              }`}
               style={{ width: `${progressPct}%` }}
             />
           </div>
           <div className="flex items-center justify-between mt-2.5 text-xs text-gray-400">
             <span>{taskStats.done} of {taskStats.total} tasks completed</span>
-            <span>{taskStats.total - taskStats.done} remaining</span>
+            {progressPct === 100 ? (
+              <span className="text-green-600 font-semibold flex items-center gap-1">
+                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                All done!
+              </span>
+            ) : (
+              <span>{taskStats.total - taskStats.done} remaining</span>
+            )}
           </div>
         </div>
       )}

@@ -16,14 +16,15 @@ interface KanbanBoardProps {
   }) => Promise<void>;
 }
 
-const COLUMNS: { status: TaskStatus; label: string; bgColor: string; borderColor: string; dotColor: string; headerBg: string }[] = [
+const COLUMNS: { status: TaskStatus; label: string; bgColor: string; borderColor: string; dotColor: string; headerBg: string; emptyIcon: string }[] = [
   {
     status: 'Todo',
     label: 'Todo',
     bgColor: 'bg-gray-50/50',
     borderColor: 'border-gray-200',
     dotColor: 'bg-gray-400',
-    headerBg: 'bg-gray-50',
+    headerBg: 'bg-gradient-to-r from-gray-50 to-gray-100/50',
+    emptyIcon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
   },
   {
     status: 'In Progress',
@@ -31,7 +32,8 @@ const COLUMNS: { status: TaskStatus; label: string; bgColor: string; borderColor
     bgColor: 'bg-blue-50/30',
     borderColor: 'border-blue-200',
     dotColor: 'bg-blue-500',
-    headerBg: 'bg-blue-50',
+    headerBg: 'bg-gradient-to-r from-blue-50 to-blue-100/30',
+    emptyIcon: 'M13 10V3L4 14h7v7l9-11h-7z',
   },
   {
     status: 'Done',
@@ -39,7 +41,8 @@ const COLUMNS: { status: TaskStatus; label: string; bgColor: string; borderColor
     bgColor: 'bg-green-50/30',
     borderColor: 'border-green-200',
     dotColor: 'bg-green-500',
-    headerBg: 'bg-green-50',
+    headerBg: 'bg-gradient-to-r from-green-50 to-green-100/30',
+    emptyIcon: 'M5 13l4 4L19 7',
   },
 ];
 
@@ -65,10 +68,10 @@ export function KanbanBoard({ tasks, onUpdateTask, onDeleteTask, onCreateTask }:
               </div>
               <button
                 onClick={() => setAddingToColumn(col.status)}
-                className="h-7 w-7 flex items-center justify-center text-gray-400 hover:text-brand-600 hover:bg-white rounded-lg transition-all duration-150"
+                className="h-7 w-7 flex items-center justify-center text-gray-400 hover:text-brand-600 hover:bg-white rounded-lg transition-all duration-150 hover:shadow-sm"
                 title={`Add task to ${col.label}`}
               >
-                <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
               </button>
@@ -77,13 +80,14 @@ export function KanbanBoard({ tasks, onUpdateTask, onDeleteTask, onCreateTask }:
             {/* Tasks list */}
             <div className="flex-1 p-3 space-y-3 overflow-y-auto">
               {colTasks.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-32 text-gray-400">
-                  <div className="h-12 w-12 rounded-2xl bg-white border border-dashed border-gray-200 flex items-center justify-center mb-3">
-                    <svg className="h-5 w-5 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                <div className="flex flex-col items-center justify-center h-40 text-gray-400">
+                  <div className="h-14 w-14 rounded-2xl bg-white border-2 border-dashed border-gray-200 flex items-center justify-center mb-3">
+                    <svg className="h-6 w-6 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={col.emptyIcon} />
                     </svg>
                   </div>
-                  <p className="text-xs font-medium">No tasks yet</p>
+                  <p className="text-xs font-medium mb-1">No tasks yet</p>
+                  <p className="text-[11px] text-gray-300">Click + to add one</p>
                 </div>
               ) : (
                 colTasks.map(task => (
