@@ -10,9 +10,9 @@ interface TaskCardProps {
 }
 
 const PRIORITY_STYLES: Record<Task['priority'], { bg: string; text: string; dot: string; border: string }> = {
-  Low: { bg: 'bg-gray-50', text: 'text-gray-600', dot: 'bg-gray-400', border: 'border-l-gray-300' },
-  Medium: { bg: 'bg-amber-50', text: 'text-amber-700', dot: 'bg-amber-400', border: 'border-l-amber-400' },
-  High: { bg: 'bg-red-50', text: 'text-red-700', dot: 'bg-red-500', border: 'border-l-red-400' },
+  Low: { bg: 'bg-gray-50 dark:bg-gray-700', text: 'text-gray-600 dark:text-gray-300', dot: 'bg-gray-400', border: 'border-l-gray-300 dark:border-l-gray-500' },
+  Medium: { bg: 'bg-amber-50 dark:bg-amber-900/30', text: 'text-amber-700 dark:text-amber-400', dot: 'bg-amber-400', border: 'border-l-amber-400' },
+  High: { bg: 'bg-red-50 dark:bg-red-900/30', text: 'text-red-700 dark:text-red-400', dot: 'bg-red-500 dark:bg-red-400', border: 'border-l-red-400' },
 };
 
 function formatDate(dateStr: string | null): string | null {
@@ -56,15 +56,15 @@ export function TaskCard({ task, onUpdate, onDelete }: TaskCardProps) {
 
   return (
     <>
-      <div className={`bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-card transition-all duration-200 group border-l-[3px] ${priorityStyle.border} ${overdue ? 'ring-1 ring-red-200' : ''}`}>
+      <div className={`bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-card transition-all duration-200 group border-l-[3px] ${priorityStyle.border} ${overdue ? 'ring-1 ring-red-200 dark:ring-red-800' : ''} dark:bg-gray-800 dark:border-gray-700`}>
         <div className="p-4">
           {/* Header: title + actions */}
           <div className="flex items-start justify-between gap-2 mb-2">
-            <h4 className={`text-sm font-semibold leading-snug flex-1 ${task.status === 'Done' ? 'text-gray-400 line-through' : 'text-gray-900'}`}>{task.title}</h4>
+            <h4 className={`text-sm font-semibold leading-snug flex-1 ${task.status === 'Done' ? 'text-gray-400 line-through dark:text-gray-500' : 'text-gray-900 dark:text-white'}`}>{task.title}</h4>
             <div className="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
               <button
                 onClick={() => setShowEdit(true)}
-                className="p-1.5 text-gray-400 hover:text-brand-600 rounded-lg hover:bg-brand-50 transition-all duration-150"
+                className="p-1.5 text-gray-400 hover:text-brand-600 rounded-lg hover:bg-brand-50 transition-all duration-150 dark:hover:bg-brand-900/30"
                 title="Edit task"
               >
                 <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -73,7 +73,7 @@ export function TaskCard({ task, onUpdate, onDelete }: TaskCardProps) {
               </button>
               <button
                 onClick={() => setShowConfirm(true)}
-                className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-all duration-150"
+                className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-all duration-150 dark:hover:bg-red-900/30 dark:hover:text-red-400"
                 title="Delete task"
               >
                 <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -85,7 +85,7 @@ export function TaskCard({ task, onUpdate, onDelete }: TaskCardProps) {
 
           {/* Description */}
           {task.description && (
-            <p className="text-xs text-gray-500 mb-3 line-clamp-2 leading-relaxed">{task.description}</p>
+            <p className="text-xs text-gray-500 mb-3 line-clamp-2 leading-relaxed dark:text-gray-400">{task.description}</p>
           )}
 
           {/* Tags: priority + due date */}
@@ -96,7 +96,7 @@ export function TaskCard({ task, onUpdate, onDelete }: TaskCardProps) {
             </span>
 
             {task.due_date && (
-              <span className={`inline-flex items-center gap-1 text-xs font-medium ${overdue ? 'text-red-600 bg-red-50 px-2 py-0.5 rounded-lg' : 'text-gray-500'}`}>
+              <span className={`inline-flex items-center gap-1 text-xs font-medium ${overdue ? 'text-red-600 bg-red-50 px-2 py-0.5 rounded-lg dark:text-red-400 dark:bg-red-900/30' : 'text-gray-500 dark:text-gray-400'}`}>
                 <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
@@ -106,12 +106,12 @@ export function TaskCard({ task, onUpdate, onDelete }: TaskCardProps) {
           </div>
 
           {/* Status selector */}
-          <div className="mt-3 pt-3 border-t border-gray-50">
+          <div className="mt-3 pt-3 border-t border-gray-50 dark:border-gray-700">
             <select
               value={task.status}
               onChange={e => handleStatusChange(e.target.value as TaskStatus)}
               disabled={updatingStatus}
-              className="w-full text-xs font-medium border border-gray-200 rounded-lg px-2.5 py-1.5 bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-400 cursor-pointer disabled:opacity-50 transition-all duration-150"
+              className="w-full text-xs font-medium border border-gray-200 rounded-lg px-2.5 py-1.5 bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-400 cursor-pointer disabled:opacity-50 transition-all duration-150 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
             >
               <option value="Todo">Todo</option>
               <option value="In Progress">In Progress</option>

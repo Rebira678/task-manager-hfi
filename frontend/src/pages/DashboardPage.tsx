@@ -45,7 +45,7 @@ function ProjectCard({
   const colorGradient = getProjectColor(project.id);
 
   return (
-    <div className="group relative bg-white rounded-2xl border border-gray-100 shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col animate-fade-in overflow-hidden">
+    <div className="group relative bg-white rounded-2xl border border-gray-100 shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col animate-fade-in overflow-hidden dark:bg-gray-800 dark:border-gray-700">
       {/* Color strip at top */}
       <div className={`h-1.5 bg-gradient-to-r ${colorGradient}`} />
 
@@ -58,19 +58,19 @@ function ProjectCard({
             <div className="flex-1 min-w-0">
               <Link
                 to={`/projects/${project.id}`}
-                className="text-lg font-bold text-gray-900 hover:text-brand-600 transition-colors block truncate"
+                className="text-lg font-bold text-gray-900 hover:text-brand-600 transition-colors block truncate dark:text-white dark:hover:text-brand-400"
               >
                 {project.title}
               </Link>
               {project.description && (
-                <p className="text-sm text-gray-500 mt-1 line-clamp-2 leading-relaxed">{project.description}</p>
+                <p className="text-sm text-gray-500 mt-1 line-clamp-2 leading-relaxed dark:text-gray-400">{project.description}</p>
               )}
             </div>
           </div>
           <div className="flex gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
               onClick={() => onEdit(project)}
-              className="p-2 text-gray-400 hover:text-brand-600 rounded-xl hover:bg-brand-50 transition-all duration-150"
+              className="p-2 text-gray-400 hover:text-brand-600 rounded-xl hover:bg-brand-50 transition-all duration-150 dark:hover:bg-brand-900/30"
               title="Edit project"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -79,7 +79,7 @@ function ProjectCard({
             </button>
             <button
               onClick={() => onDelete(project)}
-              className="p-2 text-gray-400 hover:text-red-600 rounded-xl hover:bg-red-50 transition-all duration-150"
+              className="p-2 text-gray-400 hover:text-red-600 rounded-xl hover:bg-red-50 transition-all duration-150 dark:hover:bg-red-900/30 dark:hover:text-red-400"
               title="Delete project"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -89,8 +89,8 @@ function ProjectCard({
           </div>
         </div>
 
-        <div className="flex items-center justify-between pt-4 border-t border-gray-50 mt-auto">
-          <span className="text-xs text-gray-400 flex items-center gap-1.5">
+        <div className="flex items-center justify-between pt-4 border-t border-gray-50 mt-auto dark:border-gray-700">
+          <span className="text-xs text-gray-400 flex items-center gap-1.5 dark:text-gray-500">
             <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
@@ -98,7 +98,7 @@ function ProjectCard({
           </span>
           <Link
             to={`/projects/${project.id}`}
-            className="text-sm text-brand-600 hover:text-brand-700 font-semibold flex items-center gap-1 transition-colors"
+            className="text-sm text-brand-600 hover:text-brand-700 font-semibold flex items-center gap-1 transition-colors dark:text-brand-400 dark:hover:text-brand-300"
           >
             Open
             <svg className="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -196,7 +196,7 @@ export function DashboardPage() {
           {search && (
             <button
               onClick={() => setSearch('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-0.5 rounded transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-0.5 rounded transition-colors dark:hover:text-gray-300"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -213,8 +213,8 @@ export function DashboardPage() {
       </div>
 
       {error && (
-        <div className="rounded-xl bg-red-50 border border-red-100 px-4 py-3.5 text-sm text-red-700 mb-8 flex items-center gap-2.5 animate-fade-in">
-          <svg className="h-4 w-4 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="rounded-xl bg-red-50 border border-red-100 px-4 py-3.5 text-sm text-red-700 mb-8 flex items-center gap-2.5 animate-fade-in dark:bg-red-900/20 dark:border-red-800 dark:text-red-400">
+          <svg className="h-4 w-4 text-red-500 shrink-0 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           {error}
@@ -227,13 +227,13 @@ export function DashboardPage() {
         </div>
       ) : projects.length === 0 ? (
         <div className="text-center py-20 animate-fade-in">
-          <div className="inline-flex h-20 w-20 items-center justify-center bg-gradient-to-br from-brand-50 to-brand-100 rounded-3xl mb-6">
+          <div className="inline-flex h-20 w-20 items-center justify-center bg-gradient-to-br from-brand-50 to-brand-100 rounded-3xl mb-6 dark:from-brand-900/30 dark:to-brand-800/30">
             <svg className="h-10 w-10 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">No projects yet</h3>
-          <p className="text-gray-500 mb-8 text-sm max-w-sm mx-auto">Create your first project to start organizing tasks and tracking progress.</p>
+          <h3 className="text-xl font-bold text-gray-900 mb-2 dark:text-white">No projects yet</h3>
+          <p className="text-gray-500 mb-8 text-sm max-w-sm mx-auto dark:text-gray-400">Create your first project to start organizing tasks and tracking progress.</p>
           <button className="btn-primary" onClick={() => setShowCreate(true)}>
             <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -243,13 +243,13 @@ export function DashboardPage() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="text-center py-16 animate-fade-in">
-          <div className="inline-flex h-16 w-16 items-center justify-center bg-gray-100 rounded-2xl mb-5">
+          <div className="inline-flex h-16 w-16 items-center justify-center bg-gray-100 rounded-2xl mb-5 dark:bg-gray-800">
             <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
-          <h3 className="text-lg font-bold text-gray-900 mb-1">No matching projects</h3>
-          <p className="text-gray-500 text-sm">Try a different search term or <button onClick={() => setSearch('')} className="text-brand-600 hover:text-brand-700 font-semibold">clear the filter</button>.</p>
+          <h3 className="text-lg font-bold text-gray-900 mb-1 dark:text-white">No matching projects</h3>
+          <p className="text-gray-500 text-sm dark:text-gray-400">Try a different search term or <button onClick={() => setSearch('')} className="text-brand-600 hover:text-brand-700 font-semibold dark:text-brand-400">clear the filter</button>.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

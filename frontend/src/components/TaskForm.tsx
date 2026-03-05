@@ -65,8 +65,8 @@ export function TaskForm({ initial, initialStatus, onSubmit, onClose, mode }: Ta
     <Modal title={mode === 'create' ? 'New Task' : 'Edit Task'} onClose={onClose}>
       <form onSubmit={handleSubmit} className="space-y-5">
         {apiError && (
-          <div className="rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700 flex items-center gap-2">
-            <svg className="h-4 w-4 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700 flex items-center gap-2 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400">
+            <svg className="h-4 w-4 text-red-500 shrink-0 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             {apiError}
@@ -134,7 +134,7 @@ export function TaskForm({ initial, initialStatus, onSubmit, onClose, mode }: Ta
             onChange={e => setDueDate(e.target.value)}
           />
         </div>
-        <div className="flex justify-end gap-3 pt-3 border-t border-gray-100">
+        <div className="flex justify-end gap-3 pt-3 border-t border-gray-100 dark:border-gray-700">
           <button type="button" className="btn-secondary" onClick={onClose} disabled={submitting}>
             Cancel
           </button>

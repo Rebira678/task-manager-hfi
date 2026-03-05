@@ -105,15 +105,15 @@ export function LoginPage() {
         <div className="w-full max-w-md relative z-10 animate-slide-up">
           {/* Form header */}
           <div className="mb-6 sm:mb-8">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">Welcome back</h2>
-            <p className="text-gray-500 mt-1 sm:mt-1.5 text-sm sm:text-base">Sign in to your account to continue.</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight dark:text-white">Welcome back</h2>
+            <p className="text-gray-500 mt-1 sm:mt-1.5 text-sm sm:text-base dark:text-gray-400">Sign in to your account to continue.</p>
           </div>
 
           {/* Card */}
           <div className="auth-card">
             {apiError && (
-              <div className="rounded-xl bg-red-50 border border-red-100 px-4 py-3.5 text-sm text-red-700 mb-5 flex items-center gap-2.5">
-                <svg className="h-4 w-4 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="rounded-xl bg-red-50 border border-red-100 px-4 py-3.5 text-sm text-red-700 mb-5 flex items-center gap-2.5 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400">
+                <svg className="h-4 w-4 text-red-500 shrink-0 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 {apiError}
@@ -197,10 +197,10 @@ export function LoginPage() {
               </button>
             </form>
 
-            <div className="mt-6 sm:mt-7 pt-5 sm:pt-6 border-t border-gray-100">
-              <p className="text-sm text-center text-gray-500">
+            <div className="mt-6 sm:mt-7 pt-5 sm:pt-6 border-t border-gray-100 dark:border-gray-700">
+              <p className="text-sm text-center text-gray-500 dark:text-gray-400">
                 Don&apos;t have an account?{' '}
-                <Link to="/register" className="text-brand-600 hover:text-brand-700 font-semibold transition-colors">
+                <Link to="/register" className="text-brand-600 hover:text-brand-700 font-semibold transition-colors dark:text-brand-400 dark:hover:text-brand-300">
                   Create one
                 </Link>
               </p>
@@ -209,11 +209,11 @@ export function LoginPage() {
 
           {/* Demo hint */}
           <div className="mt-5 sm:mt-6 text-center">
-            <div className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm rounded-full px-4 py-2 border border-white/80">
+            <div className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm rounded-full px-4 py-2 border border-white/80 dark:bg-gray-800/60 dark:border-gray-700">
               <svg className="h-3.5 w-3.5 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-xs text-gray-500">Demo: demo@example.com / password123</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">Demo: demo@example.com / password123</span>
             </div>
           </div>
         </div>

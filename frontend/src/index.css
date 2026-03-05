@@ -6,12 +6,14 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
+    @apply bg-gray-50 text-gray-900 antialiased
+           dark:bg-gray-900 dark:text-gray-100;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
 
   ::selection {
-    @apply bg-brand-200 text-brand-900;
+    @apply bg-brand-200 text-brand-900
+           dark:bg-brand-800 dark:text-brand-100;
   }
 }
 
@@ -22,7 +24,8 @@
            transition-all duration-200 ease-out
            focus:outline-none focus:ring-2 focus:ring-offset-2
            disabled:opacity-50 disabled:cursor-not-allowed
-           active:scale-[0.97];
+           active:scale-[0.97]
+           dark:focus:ring-offset-gray-900;
   }
 
   .btn-primary {
@@ -34,7 +37,9 @@
   .btn-secondary {
     @apply btn bg-white text-gray-700 border border-gray-200
            hover:bg-gray-50 hover:border-gray-300 hover:shadow-soft
-           focus:ring-brand-500;
+           focus:ring-brand-500
+           dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600
+           dark:hover:bg-gray-700 dark:hover:border-gray-500;
   }
 
   .btn-danger {
@@ -49,22 +54,28 @@
            placeholder-gray-400 bg-white
            transition-all duration-200
            focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-400
-           hover:border-gray-300;
+           hover:border-gray-300
+           dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100
+           dark:placeholder-gray-500 dark:hover:border-gray-500
+           dark:focus:ring-brand-500/30 dark:focus:border-brand-500;
   }
 
   .label {
-    @apply block text-sm font-semibold text-gray-700 mb-1.5;
+    @apply block text-sm font-semibold text-gray-700 mb-1.5
+           dark:text-gray-300;
   }
 
   /* ── Cards ──────────────────────────── */
   .card {
     @apply bg-white rounded-2xl shadow-card border border-gray-100 p-6
-           transition-all duration-200;
+           transition-all duration-200
+           dark:bg-gray-800 dark:border-gray-700;
   }
 
   /* ── Error Text ──────────────────────── */
   .error-text {
-    @apply text-sm text-red-600 mt-1.5 font-medium;
+    @apply text-sm text-red-600 mt-1.5 font-medium
+           dark:text-red-400;
   }
 
   /* ── Auth Page Layout ─────── */
@@ -103,6 +114,10 @@
     background: linear-gradient(160deg, #f8fafc 0%, #eef2ff 50%, #e0e7ff 100%);
   }
 
+  :is(.dark .auth-right) {
+    background: linear-gradient(160deg, #111827 0%, #1e1b4b 50%, #1e1b4b 100%);
+  }
+
   .auth-right::before {
     content: '';
     @apply absolute w-[300px] h-[300px] rounded-full opacity-[0.07] animate-float;
@@ -113,7 +128,8 @@
 
   .auth-card {
     @apply bg-white/80 backdrop-blur-xl rounded-3xl shadow-modal border border-white/50
-           p-6 sm:p-8;
+           p-6 sm:p-8
+           dark:bg-gray-800/80 dark:border-gray-700/50;
   }
 
   .auth-feature-card {
@@ -128,7 +144,8 @@
 
   .password-toggle {
     @apply absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600
-           transition-colors p-1 rounded-lg hover:bg-gray-100 focus:outline-none;
+           transition-colors p-1 rounded-lg hover:bg-gray-100 focus:outline-none
+           dark:hover:text-gray-300 dark:hover:bg-gray-700;
   }
 }
 
@@ -143,9 +160,9 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 rounded-full;
+  @apply bg-gray-300 rounded-full dark:bg-gray-600;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400;
+  @apply bg-gray-400 dark:bg-gray-500;
 }
